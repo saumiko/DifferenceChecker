@@ -38,21 +38,28 @@
         </div>
     </div>
     <div class="container">
-        <form action="#" onsubmit="return false">
         <div class="row">
             <div class="col-md-6">
                 <h5 style="color:#000" class="text-center">Main Document</h5>
                 <textarea id="text1" style="width: 100%" rows="10">সকালবেলা স্কুলে যাওয়ার আগে মিতুল দেখল তার পেটে ছোট একটা ফুসকুড়ি, মোটামুটি লালচে রঙের, দেখে মনে হয় ফুসকুড়িটা রেগে আছে। নিশ্চয়ই মশা কামড়েছে-ভেবে মিতুল একটু পরেই সেটার কথা ভুলে গেল। স্কুল থেকে বাসায় এসে দুপুরে বাথরুমে গোসল করার সময় মিতুল দেখল তার পেটে রাগী রাগী আরও কয়েকটা ফুসকুড়ি।</textarea>
+                <div>
+                    Select the base document text file: 
+                    <input type="file" id="baseInput">
+                </div>
             </div>
             <div class="col-md-6">
                 <h5 style="color:#000" class="text-center">OCR Output</h5>
                 <textarea id="text2" style="width: 100%" rows="10">সকালবেলা স্থলে যাওয়ার আগে মিতুল দেখল তার পেটে ছোট একটা ফুসকুড়ি, মোটামুটি লালচে রঙের, দেখে মনে হয় ফুসকুড়িটা রেগে আছে । নিচ্চয়ই মশা কামড়েছে-ভেবে মিতুল একুঢ পরেই সেটার কথা ভুলে গেল । স্থল থেকে বাসায় এসে দুপুরে বাথরুমে গোসল করার সময় মিতুল দেখল তার পেটে রাগী রাগী আরও কয়েকটা ফুসকুড়ি ।</textarea>
+                <div>
+                    Select the OCR output text file: 
+                    <input type="file" id="ocrInput">
+                </div>
+                <br> <br>
             </div>
             <div class="text-center">
                 <br>
                 <input type="button" class="btn btn-success" onclick="launch()" value="Compute Difference">
             </div>
-        </form>
                 <br>
                 <div id="outputdiv"></div>
         </div>
@@ -80,6 +87,47 @@
           var ds = dmp.diff_prettyHtml(d);
           document.getElementById('outputdiv').innerHTML = ds;
         }
+
+        window.onload = function() {
+        var baseInput = document.getElementById('baseInput');
+        var ocrInput = document.getElementById('ocrInput');
+
+        baseInput.addEventListener('change', function(e) {
+            var file = baseInput.files[0];
+            var textType = /text.*/;
+
+            if (file.type.match(textType)) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    text1.value = reader.result;
+                }
+
+                reader.readAsText(file);    
+            } else {
+                text1.innerText = "File format not supported!"
+            }
+        });
+
+        ocrInput.addEventListener('change', function(e) {
+            var file = ocrInput.files[0];
+            var textType = /text.*/;
+
+            if (file.type.match(textType)) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+
+                    text2.value = reader.result;
+                }
+
+                reader.readAsText(file);    
+            } else {
+                text2.innerText = "File format not supported!"
+            }
+        });
+}
+
     </script>
 </body>
 
