@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset=utf-8>
+    <title>Difference Checker</title>
+    <meta content="IE=edge"http-equiv=X-UA-Compatible>
+    <meta content="width=device-width,initial-scale=1"name=viewport>
+    <meta property="og:title" content="BanglaOCR Difference Checker">
+    <meta property="og:description" content="Main Document and OCR Output Difference finder tool.">
+    <meta content="Asif Mohaimen"name=author>
+    <meta content=noindex name=robots>
+    <link rel="shortcut icon" href="https://asifmohaimen.me/favicon.ico" type="image/png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/diff_match_patch/20121119/diff_match_patch.js"></script>
+    <!-- Custom CSS -->
+    <link href="css/business-casual.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+</head>
+
+
+<body>
+    <div class="brand" style="color:#000">BanglaOCR Difference Checker Tool</div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="box">
+                <div class="col-md-12">
+                    <hr>
+                    
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <form action="#" onsubmit="return false">
+        <div class="row">
+            <div class="col-md-6">
+                <h5 style="color:#000" class="text-center">Main Document</h5>
+                <textarea id="text1" style="width: 100%" rows="10">সকালবেলা স্কুলে যাওয়ার আগে মিতুল দেখল তার পেটে ছোট একটা ফুসকুড়ি, মোটামুটি লালচে রঙের, দেখে মনে হয় ফুসকুড়িটা রেগে আছে। নিশ্চয়ই মশা কামড়েছে-ভেবে মিতুল একটু পরেই সেটার কথা ভুলে গেল। স্কুল থেকে বাসায় এসে দুপুরে বাথরুমে গোসল করার সময় মিতুল দেখল তার পেটে রাগী রাগী আরও কয়েকটা ফুসকুড়ি।</textarea>
+            </div>
+            <div class="col-md-6">
+                <h5 style="color:#000" class="text-center">OCR Output</h5>
+                <textarea id="text2" style="width: 100%" rows="10">সকালবেলা স্থলে যাওয়ার আগে মিতুল দেখল তার পেটে ছোট একটা ফুসকুড়ি, মোটামুটি লালচে রঙের, দেখে মনে হয় ফুসকুড়িটা রেগে আছে । নিচ্চয়ই মশা কামড়েছে-ভেবে মিতুল একুঢ পরেই সেটার কথা ভুলে গেল । স্থল থেকে বাসায় এসে দুপুরে বাথরুমে গোসল করার সময় মিতুল দেখল তার পেটে রাগী রাগী আরও কয়েকটা ফুসকুড়ি ।</textarea>
+            </div>
+            <div class="text-center">
+                <br>
+                <input type="button" class="btn btn-success" onclick="launch()" value="Compute Difference">
+            </div>
+        </form>
+                <br>
+                <div id="outputdiv"></div>
+        </div>
+    </div>
+    <!-- /.container -->
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p><br><br><br>Copyright &copy; <a href="https://asifmohaimen.me">Asif Mohaimen</a> &amp; Dhruba Chakraborty, 2017</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script type="text/javascript">
+        var dmp = new diff_match_patch();
+        function launch() {
+          var text1 = document.getElementById('text1').value;
+          var text2 = document.getElementById('text2').value;
+          
+          var d = dmp.diff_main(text1, text2);
+          
+          var ds = dmp.diff_prettyHtml(d);
+          document.getElementById('outputdiv').innerHTML = ds;
+        }
+    </script>
+</body>
+
+</html>
